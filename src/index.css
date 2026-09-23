@@ -285,11 +285,8 @@ section {
 }
 
 .cover__type h1 {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: clamp(10px, 2vw, 36px);
+  display: block;
+  text-align: center;
   color: var(--snow-100);
   mix-blend-mode: screen;
   opacity: 0.93;
@@ -301,9 +298,11 @@ section {
 .wordmark__word {
   display: inline-flex;
   align-items: baseline;
+  justify-content: center;
   white-space: nowrap;
   overflow: hidden;
   padding-bottom: 0.05em;
+  margin: 0 auto;
 }
 
 .wordmark__word--main {
@@ -866,6 +865,12 @@ section {
   color: var(--snow-300);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
   pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .hero-kicker {
+    margin-top: 4px;
+  }
 }
 
 .hero-kicker__dot {

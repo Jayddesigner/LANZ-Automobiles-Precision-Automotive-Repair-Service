@@ -1106,28 +1106,47 @@ export default function App() {
     if (!video || !track) return;
 
     const VIDEO_URL =
-      'https://res.cloudinary.com/b2s3bcgi/video/upload/q_auto,f_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4';
+      'https://res.cloudinary.com/b2s3bcgi/video/upload/f_mp4,q_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4';
 
-    // 1. Preload & buffer full 10-second video into memory blob to eliminate seek lag & range requests
     let blobUrl: string | null = null;
     let isCancelled = false;
 
+    // Ensure direct MP4 source is set and loaded for instant mobile playback & range requests
+    if (!video.src || video.src === '' || video.src.startsWith('blob:')) {
+      video.src = VIDEO_URL;
+    }
+    video.muted = true;
+    video.playsInline = true;
+
+    // Optional background preload into blob for desktop without blocking direct stream
     fetch(VIDEO_URL)
-      .then((res) => res.blob())
+      .then((res) => {
+        if (!res.ok) throw new Error('Fetch failed');
+        return res.blob();
+      })
       .then((blob) => {
         if (isCancelled || !video) return;
-        blobUrl = URL.createObjectURL(blob);
-        const prevTime = video.currentTime;
-        video.src = blobUrl;
-        video.currentTime = prevTime;
-        video.pause();
+        if (blob.size > 0 && !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+          blobUrl = URL.createObjectURL(blob);
+          const prevTime = video.currentTime;
+          video.src = blobUrl;
+          video.currentTime = prevTime;
+          video.pause();
+        }
       })
       .catch(() => {
-        // Direct stream fallback
+        // Fallback to direct VIDEO_URL stream
+        if (video && !video.src) {
+          video.src = VIDEO_URL;
+        }
       });
 
+    // Mobile video frame initialization
+    video.load();
     video.pause();
-    video.currentTime = 0;
+    if (video.currentTime === 0) {
+      video.currentTime = 0.001;
+    }
 
     let targetTime = 0;
     let isSeeking = false;
@@ -1208,10 +1227,18 @@ export default function App() {
 
     const handleLoadedMetadata = () => {
       video.pause();
+      if (video.currentTime === 0) {
+        video.currentTime = 0.001;
+      }
+      updateHeroScroll();
+    };
+
+    const handleLoadedData = () => {
       updateHeroScroll();
     };
 
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('loadeddata', handleLoadedData);
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
 
@@ -1223,6 +1250,7 @@ export default function App() {
       cancelAnimationFrame(rafId);
       video.removeEventListener('seeked', handleSeeked);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('loadeddata', handleLoadedData);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
       if (blobUrl) {
@@ -1699,15 +1727,17 @@ export default function App() {
             <video
               ref={heroVideoRef}
               className="cover__video"
+              src="https://res.cloudinary.com/b2s3bcgi/video/upload/f_mp4,q_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4"
               muted
               playsInline
+              autoPlay
               preload="auto"
               loop={false}
               controls={false}
               disablePictureInPicture
             >
               <source
-                src="https://res.cloudinary.com/b2s3bcgi/video/upload/q_auto,f_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4"
+                src="https://res.cloudinary.com/b2s3bcgi/video/upload/f_mp4,q_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4"
                 type="video/mp4"
               />
               <source
@@ -1732,7 +1762,7 @@ export default function App() {
                   </span>
                 ))}
               </span>
-              <span className="wordmark__space" aria-hidden="true">&nbsp;</span>
+              <br />
               <span className="wordmark__word wordmark__word--sub">
                 {'AUTOMOBILES'.split('').map((char, i) => (
                   <span key={`auto-${i}`} style={{ '--i': i + 4 } as React.CSSProperties} aria-hidden="true">
