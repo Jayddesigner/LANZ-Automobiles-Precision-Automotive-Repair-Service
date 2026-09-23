@@ -323,30 +323,61 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(16px, 2.5vw, 36px) clamp(16px, 3.5vw, 56px);
+  padding: clamp(74px, 10vh, 100px) clamp(16px, 3.5vw, 56px) clamp(20px, 3vw, 40px);
 }
 
-/* 01 · Hero Refined Navigation Bar */
-.hero-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--s-md);
+.cover__top-spacer {
+  height: clamp(8px, 1.5vh, 20px);
   width: 100%;
 }
 
-.hero-nav__brand {
-  display: flex;
-  align-items: center;
+/* =========================================================================
+   01 · FIXED TOP NAVIGATION BAR & MOBILE BURGER DRAWER
+   ========================================================================= */
+.lanz-fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10000;
+  background: rgba(8, 10, 14, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(238, 243, 248, 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.hero-nav__brand-title {
+.lanz-fixed-nav--scrolled,
+.lanz-fixed-nav--menu-open {
+  background: rgba(6, 8, 11, 0.98);
+  border-bottom-color: rgba(238, 243, 248, 0.14);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
+}
+
+.lanz-fixed-nav__inner {
+  max-width: 1540px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px clamp(16px, 3.5vw, 48px);
+  gap: var(--s-sm);
+}
+
+.lanz-fixed-nav__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.lanz-fixed-nav__brand-title {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-family: "Martian Mono", monospace;
   font-size: clamp(0.72rem, 0.68rem + 0.16vw, 0.82rem);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--snow-100);
@@ -354,11 +385,11 @@ section {
   transition: color 0.15s ease;
 }
 
-.hero-nav__brand-title:hover {
+.lanz-fixed-nav__brand-title:hover {
   color: var(--action);
 }
 
-.hero-nav__brand-dot {
+.lanz-fixed-nav__brand-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -373,37 +404,32 @@ section {
   50% { opacity: 0.35; transform: scale(0.85); }
 }
 
-.hero-nav__group {
+.lanz-fixed-nav__desktop-links {
   display: flex;
   align-items: center;
-  gap: clamp(12px, 1.8vw, 32px);
+  gap: clamp(8px, 1.1vw, 16px);
 }
 
-.hero-nav__links {
-  display: flex;
-  align-items: center;
-  gap: clamp(8px, 1.2vw, 16px);
-}
-
-.hero-nav__link {
+.lanz-fixed-nav__link {
   font-family: "Martian Mono", monospace;
-  font-size: clamp(0.64rem, 0.61rem + 0.1vw, 0.72rem);
+  font-size: clamp(0.63rem, 0.6rem + 0.1vw, 0.71rem);
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--snow-300);
   text-decoration: none;
   position: relative;
   padding: 4px 0;
   transition: color 0.15s ease;
+  white-space: nowrap;
 }
 
-.hero-nav__link:hover,
-.hero-nav__link:focus-visible {
+.lanz-fixed-nav__link:hover,
+.lanz-fixed-nav__link:focus-visible {
   color: var(--action);
 }
 
-.hero-nav__link::after {
+.lanz-fixed-nav__link::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -414,12 +440,12 @@ section {
   transition: width 0.2s ease;
 }
 
-.hero-nav__link:hover::after,
-.hero-nav__link:focus-visible::after {
+.lanz-fixed-nav__link:hover::after,
+.lanz-fixed-nav__link:focus-visible::after {
   width: 100%;
 }
 
-.hero-nav__sep {
+.lanz-fixed-nav__sep {
   color: rgba(238, 243, 248, 0.2);
   font-family: "Martian Mono", monospace;
   font-size: 0.72rem;
@@ -427,12 +453,282 @@ section {
   user-select: none;
 }
 
-.hero-nav__actions {
+.lanz-fixed-nav__right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+  flex-shrink: 0;
+}
+
+.lanz-fixed-nav__desktop-actions {
   display: inline-flex;
   align-items: center;
   gap: var(--s-xs);
   padding-left: clamp(8px, 1vw, 16px);
   border-left: 1px solid rgba(238, 243, 248, 0.15);
+}
+
+/* Technical Burger Button */
+.lanz-burger-btn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: rgba(238, 243, 248, 0.05);
+  border: 1px solid rgba(238, 243, 248, 0.16);
+  padding: 7px 12px;
+  border-radius: 2px;
+  color: var(--snow-100);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lanz-burger-btn:hover {
+  background: rgba(238, 243, 248, 0.1);
+  border-color: var(--action);
+  color: #fff;
+}
+
+.lanz-burger-btn.is-active {
+  background: rgba(199, 245, 0, 0.1);
+  border-color: var(--action);
+  color: var(--action);
+}
+
+.lanz-burger-btn__box {
+  width: 18px;
+  height: 14px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lanz-burger-btn__line {
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+.lanz-burger-btn.is-active .lanz-burger-btn__line--top {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.lanz-burger-btn.is-active .lanz-burger-btn__line--mid {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.lanz-burger-btn.is-active .lanz-burger-btn__line--bot {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.lanz-burger-btn__label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+
+/* Mobile Drawer Overlay */
+.lanz-mobile-drawer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
+}
+
+.lanz-mobile-drawer.is-open {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.lanz-mobile-drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 4, 6, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 1;
+}
+
+.lanz-mobile-drawer__content {
+  position: fixed;
+  top: 54px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100vh - 54px);
+  height: calc(100dvh - 54px);
+  background: #080A0E;
+  border-top: 1px solid rgba(238, 243, 248, 0.12);
+  padding: 18px clamp(16px, 5vw, 36px) 36px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 2;
+  transform: translateY(-8px);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lanz-mobile-drawer.is-open .lanz-mobile-drawer__content {
+  transform: translateY(0);
+}
+
+.lanz-mobile-drawer__telemetry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(14, 18, 24, 0.8);
+  border: 1px solid rgba(238, 243, 248, 0.08);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+}
+
+.lanz-mobile-drawer__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--action);
+  font-weight: 600;
+}
+
+.lanz-mobile-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--action);
+  box-shadow: 0 0 6px var(--action);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.lanz-mobile-drawer__id {
+  color: var(--snow-500);
+}
+
+.lanz-mobile-drawer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lanz-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(14, 18, 24, 0.5);
+  border: 1px solid rgba(238, 243, 248, 0.06);
+  text-decoration: none;
+  color: var(--snow-100);
+  transition: all 0.15s ease;
+}
+
+.lanz-mobile-link:hover,
+.lanz-mobile-link:active {
+  background: rgba(199, 245, 0, 0.08);
+  border-color: rgba(199, 245, 0, 0.3);
+  color: #fff;
+  transform: translateX(4px);
+}
+
+.lanz-mobile-link__num {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--action);
+  font-weight: 700;
+}
+
+.lanz-mobile-link__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lanz-mobile-link__title {
+  font-family: "Martian Mono", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.lanz-mobile-link__desc {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--snow-500);
+}
+
+.lanz-mobile-link__arrow {
+  font-size: 0.85rem;
+  color: var(--snow-500);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.lanz-mobile-link:hover .lanz-mobile-link__arrow {
+  color: var(--action);
+  transform: translateX(3px);
+}
+
+.lanz-mobile-drawer__cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+.lanz-mobile-cta-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 12px 16px !important;
+  font-size: 0.72rem !important;
+}
+
+.lanz-mobile-drawer__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(238, 243, 248, 0.1);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  color: var(--snow-500);
+}
+
+.lanz-mobile-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lanz-mobile-phone-link {
+  color: var(--action);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Nav Responsive Queries */
+@media (max-width: 1024px) {
+  .lanz-fixed-nav__desktop-links,
+  .lanz-fixed-nav__desktop-actions {
+    display: none;
+  }
+  .lanz-burger-btn {
+    display: inline-flex;
+  }
 }
 
 .hero-btn {
@@ -3638,13 +3934,33 @@ section {
   }
 }
 
+/* Global Scroll Margins for Fixed Navigation Anchor Alignment */
+#face,
+#trace,
+#spec,
+#technicians,
+#estimator,
+#testimonials,
+#faq,
+.veh-section,
+.face,
+.trace,
+.spec,
+.lanz-global-tech,
+.lanz-estimator,
+.lanz-testimonials,
+.lanz-faq {
+  scroll-margin-top: clamp(64px, 9vh, 88px);
+}
+
 /* Minimalist Technical Estimate Modal */
 .est-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 999;
-  background: rgba(11, 14, 18, 0.78);
-  backdrop-filter: blur(8px);
+  z-index: 2000;
+  background: rgba(8, 10, 14, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3659,6 +3975,9 @@ section {
 
 .est-modal {
   width: min(640px, 100%);
+  max-height: min(90vh, 820px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #11151B;
   border: 1px solid rgba(238, 243, 248, 0.16);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);

@@ -1091,6 +1091,49 @@ export default function App() {
   const [newsletterEmail, setNewsletterEmail] = useState<string>('');
   const [newsletterSuccess, setNewsletterSuccess] = useState<boolean>(false);
 
+  // 10: Fixed Navigation & Mobile Burger Menu State
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+
+  // Scroll listener for fixed navigation bar styling
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 24);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open, handle ESC and resize
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth > 1024 && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobileMenuOpen]);
+
   // Initialize Lenis and Intersection Observer
   useEffect(() => {
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1268,6 +1311,7 @@ export default function App() {
     .toFixed(1);
 
   const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -1285,6 +1329,232 @@ export default function App() {
 
   return (
     <>
+      {/* ==================================================== FIXED TOP NAVIGATION BAR */}
+      <header
+        className={`lanz-fixed-nav ${isScrolled ? 'lanz-fixed-nav--scrolled' : ''} ${isMobileMenuOpen ? 'lanz-fixed-nav--menu-open' : ''}`}
+        aria-label="Main Navigation"
+      >
+        <div className="lanz-fixed-nav__inner">
+          <div className="lanz-fixed-nav__brand">
+            <a
+              href="#"
+              className="lanz-fixed-nav__brand-title"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              aria-label="LANZ AUTOMOBILES - Return to top"
+            >
+              <span className="lanz-fixed-nav__brand-dot" aria-hidden="true" />
+              LANZ AUTOMOBILES
+            </a>
+          </div>
+
+          <nav className="lanz-fixed-nav__desktop-links" aria-label="Desktop Navigation Links">
+            <a
+              href="#face"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('face');
+              }}
+            >
+              SERVICES
+            </a>
+            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
+            <a
+              href="#trace"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('trace');
+              }}
+            >
+              PERFORMANCE
+            </a>
+            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
+            <a
+              href="#spec"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('spec');
+              }}
+            >
+              STANDARD
+            </a>
+            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
+            <a
+              href="#technicians"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('technicians');
+              }}
+            >
+              TECHNICIANS
+            </a>
+            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
+            <a
+              href="#estimator"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('estimator');
+              }}
+            >
+              ESTIMATOR
+            </a>
+            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
+            <a
+              href="#testimonials"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('testimonials');
+              }}
+            >
+              TESTIMONIALS
+            </a>
+            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
+            <a
+              href="#faq"
+              className="lanz-fixed-nav__link"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('faq');
+              }}
+            >
+              FAQ
+            </a>
+          </nav>
+
+          <div className="lanz-fixed-nav__right">
+            <div className="lanz-fixed-nav__desktop-actions">
+              <button
+                type="button"
+                onClick={() => scrollToSection('estimator')}
+                className="hero-btn hero-btn--secondary"
+                aria-label="Calculate Vehicle Repair Cost Estimate"
+              >
+                CALCULATE ESTIMATE
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsBookingModalOpen(true)}
+                className="hero-btn hero-btn--primary"
+                aria-label="Book service bay"
+              >
+                <span>BOOK SERVICE</span>
+                <span className="hero-btn__arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            {/* Mobile Burger Toggle Button */}
+            <button
+              type="button"
+              className={`lanz-burger-btn ${isMobileMenuOpen ? 'is-active' : ''}`}
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="lanzMobileMenu"
+            >
+              <span className="lanz-burger-btn__box" aria-hidden="true">
+                <span className="lanz-burger-btn__line lanz-burger-btn__line--top" />
+                <span className="lanz-burger-btn__line lanz-burger-btn__line--mid" />
+                <span className="lanz-burger-btn__line lanz-burger-btn__line--bot" />
+              </span>
+              <span className="lanz-burger-btn__label mono">
+                {isMobileMenuOpen ? 'CLOSE' : 'MENU'}
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Navigation Drawer / Sheet (Rendered at top-level with high z-index) */}
+      <div
+        id="lanzMobileMenu"
+        className={`lanz-mobile-drawer ${isMobileMenuOpen ? 'is-open' : ''}`}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="lanz-mobile-drawer__backdrop" onClick={() => setIsMobileMenuOpen(false)} />
+        <div className="lanz-mobile-drawer__content">
+          <div className="lanz-mobile-drawer__telemetry mono">
+            <div className="lanz-mobile-drawer__status">
+              <span className="lanz-mobile-live-dot" /> ALL 32 BAYS OPERATIONAL
+            </div>
+            <div className="lanz-mobile-drawer__id">
+              US-FAC-LA8401
+            </div>
+          </div>
+
+          <nav className="lanz-mobile-drawer__links" aria-label="Mobile Navigation Menu">
+            {[
+              { href: '#face', id: 'face', num: '01', title: 'SERVICES & VEHICLES', desc: 'Powertrain, suspension, diagnostics' },
+              { href: '#trace', id: 'trace', num: '02', title: 'PERFORMANCE DATA', desc: 'Chassis dyno & laser geometry' },
+              { href: '#spec', id: 'spec', num: '03', title: 'ENGINEERING STANDARD', desc: 'ISO 9001 & OEM protocols' },
+              { href: '#technicians', id: 'technicians', num: '04', title: 'MASTER TECHNICIANS', desc: 'ASE certified master specialists' },
+              { href: '#estimator', id: 'estimator', num: '05', title: 'COST ESTIMATOR', desc: 'Interactive repair price calculator' },
+              { href: '#testimonials', id: 'testimonials', num: '06', title: 'CLIENT TESTIMONIALS', desc: 'Verified customer reviews & telemetry' },
+              { href: '#faq', id: 'faq', num: '07', title: 'TECHNICAL FAQ', desc: 'Warranties, turnarounds, towing' },
+            ].map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                className="lanz-mobile-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(item.id);
+                }}
+              >
+                <span className="lanz-mobile-link__num mono">{item.num}</span>
+                <div className="lanz-mobile-link__info">
+                  <span className="lanz-mobile-link__title">{item.title}</span>
+                  <span className="lanz-mobile-link__desc mono">{item.desc}</span>
+                </div>
+                <span className="lanz-mobile-link__arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
+          </nav>
+
+          <div className="lanz-mobile-drawer__cta">
+            <button
+              type="button"
+              className="hero-btn hero-btn--secondary lanz-mobile-cta-btn"
+              onClick={() => {
+                scrollToSection('estimator');
+              }}
+            >
+              CALCULATE ESTIMATE
+            </button>
+            <button
+              type="button"
+              className="hero-btn hero-btn--primary lanz-mobile-cta-btn"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsBookingModalOpen(true);
+              }}
+            >
+              <span>BOOK SERVICE BAY</span>
+              <span className="hero-btn__arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div className="lanz-mobile-drawer__footer mono">
+            <div className="lanz-mobile-footer-row">
+              <span>DIRECT INTAKE:</span>
+              <a href="tel:+18005555269" className="lanz-mobile-phone-link">+1 (800) 555-LANZ</a>
+            </div>
+            <div className="lanz-mobile-footer-row">
+              <span>WORKSHOP:</span>
+              <span>MON-FRI 06:30-19:30 EST</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ==================================================== 01 · COVER */}
       <header className="cover">
         <span className="beam" aria-hidden="true"></span>
@@ -1311,123 +1581,8 @@ export default function App() {
           />
         </div>
         <div className="cover__grid">
-          {/* Top-Bar Navigation */}
-          <div className="hero-nav ci" style={{ '--i': 0 } as React.CSSProperties}>
-            <div className="hero-nav__brand">
-              <a
-                href="#"
-                className="hero-nav__brand-title"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                <span className="hero-nav__brand-dot" aria-hidden="true"></span>
-                LANZ AUTOMOBILES
-              </a>
-            </div>
-
-            <div className="hero-nav__group">
-              <nav className="hero-nav__links" aria-label="Primary Navigation">
-                <a
-                  href="#face"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('face');
-                  }}
-                >
-                  SERVICES
-                </a>
-                <span className="hero-nav__sep" aria-hidden="true">/</span>
-                <a
-                  href="#trace"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('trace');
-                  }}
-                >
-                  PERFORMANCE
-                </a>
-                <span className="hero-nav__sep" aria-hidden="true">/</span>
-                <a
-                  href="#spec"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('spec');
-                  }}
-                >
-                  STANDARD
-                </a>
-                <span className="hero-nav__sep" aria-hidden="true">/</span>
-                <a
-                  href="#technicians"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('technicians');
-                  }}
-                >
-                  TECHNICIANS
-                </a>
-                <span className="hero-nav__sep" aria-hidden="true">/</span>
-                <a
-                  href="#estimator"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('estimator');
-                  }}
-                >
-                  ESTIMATOR
-                </a>
-                <span className="hero-nav__sep" aria-hidden="true">/</span>
-                <a
-                  href="#testimonials"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('testimonials');
-                  }}
-                >
-                  TESTIMONIALS
-                </a>
-                <span className="hero-nav__sep" aria-hidden="true">/</span>
-                <a
-                  href="#faq"
-                  className="hero-nav__link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('faq');
-                  }}
-                >
-                  FAQ
-                </a>
-              </nav>
-
-              <div className="hero-nav__actions">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('estimator')}
-                  className="hero-btn hero-btn--secondary"
-                  aria-label="Calculate Vehicle Repair Cost Estimate"
-                >
-                  CALCULATE ESTIMATE
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsBookingModalOpen(true)}
-                  className="hero-btn hero-btn--primary"
-                  aria-label="Book service bay"
-                >
-                  <span>BOOK SERVICE</span>
-                  <span className="hero-btn__arrow" aria-hidden="true">→</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* Cover Top Clearance Spacer for Fixed Nav */}
+          <div className="cover__top-spacer ci" style={{ '--i': 0 } as React.CSSProperties} aria-hidden="true" />
 
           {/* Center / Mid-Hero Supporting Technical Metadata Layer */}
           <div className="hero-center">
