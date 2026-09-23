@@ -1310,10 +1310,6 @@ export default function App() {
             alt="Master automotive engineering and precision vehicle diagnostics."
           />
         </div>
-        <span className="reg reg--tl"></span>
-        <span className="reg reg--tr"></span>
-        <span className="reg reg--bl"></span>
-        <span className="reg reg--br"></span>
         <div className="cover__grid">
           {/* Top-Bar Navigation */}
           <div className="hero-nav ci" style={{ '--i': 0 } as React.CSSProperties}>
