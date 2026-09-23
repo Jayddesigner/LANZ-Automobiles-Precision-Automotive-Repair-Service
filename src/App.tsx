@@ -6,6 +6,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import estimatorCarImg from './assets/images/lanz_estimator_car_1790166411842.jpg';
+import bentoHeroWorkshopImg from './assets/images/bento_hero_workshop_1790191996761.jpg';
+import bentoEngineImg from './assets/images/bento_engine_powertrain_1790192012238.jpg';
+import bentoBrakeLaserImg from './assets/images/bento_brake_laser_1790192024594.jpg';
+import bentoEvBatteryImg from './assets/images/bento_ev_battery_1790192035440.jpg';
+import bentoFleetLineupImg from './assets/images/bento_fleet_lineup_1790192051728.jpg';
+import bentoDiagnosticScanImg from './assets/images/bento_diagnostic_scan_1790192063045.jpg';
 
 interface SectionData {
   n: string;
@@ -2293,6 +2299,245 @@ export default function App() {
               <div>TARGET: PERFORMANCE MOTO-CELL</div>
               <div>TOLERANCE: ±0.01 MM</div>
               <div>4 ANCHORS SYNCHRONIZED</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================================================== 04.5 · GALLERY BENTO GRID */}
+      <section className="lanz-gallery io" id="gallery" aria-labelledby="gallery-h">
+        <div className="wrap">
+          {/* Gallery Header */}
+          <div className="lanz-gallery-head">
+            <div className="lanz-gallery-head__left">
+              <div className="lanz-gallery-eyebrow mono">
+                <span className="lanz-gallery-dot" aria-hidden="true" />
+                <span>GALLERY / 06</span>
+              </div>
+              <h2 id="gallery-h" className="lanz-gallery-title">
+                PRECISION IN EVERY DETAIL.
+              </h2>
+              <p className="lanz-gallery-lede">
+                A visual look at the vehicles, diagnostics, workshop process, and craftsmanship behind every LANZ service.
+              </p>
+            </div>
+            <div className="lanz-gallery-head__right mono">
+              <span className="lanz-gallery-counter">6 WORKSHOP CAPTURES</span>
+            </div>
+          </div>
+
+          {/* Asymmetric Bento Grid matching image reference */}
+          <div className="lanz-bento-grid">
+            {/* POSITION 1: Top-Left Tall (Spans Rows 1-2, Col 1) */}
+            <div className="lanz-bento-card lanz-bento-card--pos-1">
+              <div className="lanz-bento-media">
+                <img
+                  src={bentoHeroWorkshopImg}
+                  alt="LANZ Master Workshop Bay with Porsche GT3 RS"
+                  className="lanz-bento-img"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="lanz-bento-sweep" aria-hidden="true" />
+                <div className="lanz-bento-scannline" aria-hidden="true" />
+              </div>
+              <div className="lanz-bento-overlay">
+                <span className="lanz-bento-corner lanz-bento-corner--tl" aria-hidden="true" />
+                <span className="lanz-bento-corner lanz-bento-corner--br" aria-hidden="true" />
+                <div className="lanz-bento-top-meta mono">
+                  <span className="lanz-bento-badge">
+                    <span className="lanz-bento-num">01/06</span>
+                    <span className="lanz-bento-sep">//</span>
+                    <span>DIAGNOSTICS</span>
+                  </span>
+                  <span className="lanz-bento-status">
+                    <span className="lanz-status-dot lanz-status-dot--pulse" aria-hidden="true" />
+                    <span>BAY 01 ACTIVE</span>
+                  </span>
+                </div>
+                <div className="lanz-bento-bottom-meta">
+                  <div className="lanz-bento-sub-bar mono">
+                    <span>OPTICAL BUS BENCH</span>
+                    <span className="lanz-bento-bar-dot" aria-hidden="true" />
+                    <span>992 GT3 RS</span>
+                  </div>
+                  <h3 className="lanz-bento-card-title">MASTER WORKSHOP & HYDRAULIC INTAKE</h3>
+                  <p className="lanz-bento-card-sub mono">PORSCHE 992 GT3 RS · OPTICAL BUS DIAGNOSTIC BENCH</p>
+                </div>
+              </div>
+            </div>
+
+            {/* POSITION 2: Top-Middle (Row 1, Col 2) */}
+            <div className="lanz-bento-card lanz-bento-card--pos-2">
+              <div className="lanz-bento-media">
+                <img
+                  src={bentoEngineImg}
+                  alt="V8 Supercar Engine Blueprinting"
+                  className="lanz-bento-img"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="lanz-bento-sweep" aria-hidden="true" />
+                <div className="lanz-bento-scannline" aria-hidden="true" />
+              </div>
+              <div className="lanz-bento-overlay">
+                <span className="lanz-bento-corner lanz-bento-corner--tl" aria-hidden="true" />
+                <span className="lanz-bento-corner lanz-bento-corner--br" aria-hidden="true" />
+                <div className="lanz-bento-top-meta mono">
+                  <span className="lanz-bento-badge">
+                    <span className="lanz-bento-num">02/06</span>
+                    <span className="lanz-bento-sep">//</span>
+                    <span>ENGINE ANALYSIS</span>
+                  </span>
+                  <span className="lanz-bento-tag mono">TWIN-TURBO V8</span>
+                </div>
+                <div className="lanz-bento-bottom-meta">
+                  <div className="lanz-bento-sub-bar mono">
+                    <span>PRESSURE & TIMING</span>
+                  </div>
+                  <h3 className="lanz-bento-card-title">POWERTRAIN BLUEPRINTING</h3>
+                  <p className="lanz-bento-card-sub mono">CYLINDER PRESSURE & VALVE TIMING</p>
+                </div>
+              </div>
+            </div>
+
+            {/* POSITION 3: Top-Right (Row 1, Col 3) */}
+            <div className="lanz-bento-card lanz-bento-card--pos-3">
+              <div className="lanz-bento-media">
+                <img
+                  src={bentoBrakeLaserImg}
+                  alt="Carbon Ceramic Brake Laser Calibration"
+                  className="lanz-bento-img"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="lanz-bento-sweep" aria-hidden="true" />
+                <div className="lanz-bento-scannline" aria-hidden="true" />
+              </div>
+              <div className="lanz-bento-overlay">
+                <span className="lanz-bento-corner lanz-bento-corner--tl" aria-hidden="true" />
+                <span className="lanz-bento-corner lanz-bento-corner--br" aria-hidden="true" />
+                <div className="lanz-bento-top-meta mono">
+                  <span className="lanz-bento-badge">
+                    <span className="lanz-bento-num">03/06</span>
+                    <span className="lanz-bento-sep">//</span>
+                    <span>BRAKE SYSTEM</span>
+                  </span>
+                  <span className="lanz-bento-tag mono">±0.01MM TOLERANCE</span>
+                </div>
+                <div className="lanz-bento-bottom-meta">
+                  <div className="lanz-bento-sub-bar mono">
+                    <span>3D LASER AUDIT</span>
+                  </div>
+                  <h3 className="lanz-bento-card-title">CARBON-CERAMIC RUNOUT</h3>
+                  <p className="lanz-bento-card-sub mono">3D LASER ALIGNMENT & TORQUE AUDIT</p>
+                </div>
+              </div>
+            </div>
+
+            {/* POSITION 4: Middle-Middle (Row 2, Col 2) */}
+            <div className="lanz-bento-card lanz-bento-card--pos-4">
+              <div className="lanz-bento-media">
+                <img
+                  src={bentoEvBatteryImg}
+                  alt="High-Voltage Battery & Inverter Calibration"
+                  className="lanz-bento-img"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="lanz-bento-sweep" aria-hidden="true" />
+                <div className="lanz-bento-scannline" aria-hidden="true" />
+              </div>
+              <div className="lanz-bento-overlay">
+                <span className="lanz-bento-corner lanz-bento-corner--tl" aria-hidden="true" />
+                <span className="lanz-bento-corner lanz-bento-corner--br" aria-hidden="true" />
+                <div className="lanz-bento-top-meta mono">
+                  <span className="lanz-bento-badge">
+                    <span className="lanz-bento-num">04/06</span>
+                    <span className="lanz-bento-sep">//</span>
+                    <span>ASE VERIFIED</span>
+                  </span>
+                  <span className="lanz-bento-tag mono">800V CLASS 4</span>
+                </div>
+                <div className="lanz-bento-bottom-meta">
+                  <div className="lanz-bento-sub-bar mono">
+                    <span>CELL BALANCING</span>
+                  </div>
+                  <h3 className="lanz-bento-card-title">EV BATTERY ARCHITECTURE</h3>
+                  <p className="lanz-bento-card-sub mono">PYROTECHNIC SWITCH & CELL BALANCING</p>
+                </div>
+              </div>
+            </div>
+
+            {/* POSITION 5: Bottom-Left Wide (Row 3, Cols 1-2) */}
+            <div className="lanz-bento-card lanz-bento-card--pos-5">
+              <div className="lanz-bento-media">
+                <img
+                  src={bentoFleetLineupImg}
+                  alt="Exotic European supercars and performance fleet lineup"
+                  className="lanz-bento-img"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="lanz-bento-sweep" aria-hidden="true" />
+                <div className="lanz-bento-scannline" aria-hidden="true" />
+              </div>
+              <div className="lanz-bento-overlay">
+                <span className="lanz-bento-corner lanz-bento-corner--tl" aria-hidden="true" />
+                <span className="lanz-bento-corner lanz-bento-corner--br" aria-hidden="true" />
+                <div className="lanz-bento-top-meta mono">
+                  <span className="lanz-bento-badge">
+                    <span className="lanz-bento-num">05/06</span>
+                    <span className="lanz-bento-sep">//</span>
+                    <span>MULTI-VEHICLE SERVICE</span>
+                  </span>
+                  <span className="lanz-bento-status">
+                    <span className="lanz-status-dot lanz-status-dot--pulse" aria-hidden="true" />
+                    <span>STAGING AREA</span>
+                  </span>
+                </div>
+                <div className="lanz-bento-bottom-meta">
+                  <div className="lanz-bento-sub-bar mono">
+                    <span>EXOTIC & COMMERCIAL FLEET</span>
+                  </div>
+                  <h3 className="lanz-bento-card-title">SPECIALIST EXOTIC & FLEET STAGING</h3>
+                  <p className="lanz-bento-card-sub mono">EUROPEAN PERFORMANCE, COMMERCIAL & EV CHASSIS</p>
+                </div>
+              </div>
+            </div>
+
+            {/* POSITION 6: Right-Tall (Rows 2-3, Col 3) */}
+            <div className="lanz-bento-card lanz-bento-card--pos-6">
+              <div className="lanz-bento-media">
+                <img
+                  src={bentoDiagnosticScanImg}
+                  alt="Real-time CAN-bus waveform telemetry tablet"
+                  className="lanz-bento-img"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="lanz-bento-sweep" aria-hidden="true" />
+                <div className="lanz-bento-scannline" aria-hidden="true" />
+              </div>
+              <div className="lanz-bento-overlay">
+                <span className="lanz-bento-corner lanz-bento-corner--tl" aria-hidden="true" />
+                <span className="lanz-bento-corner lanz-bento-corner--br" aria-hidden="true" />
+                <div className="lanz-bento-top-meta mono">
+                  <span className="lanz-bento-badge">
+                    <span className="lanz-bento-num">06/06</span>
+                    <span className="lanz-bento-sep">//</span>
+                    <span>ROAD TEST COMPLETE</span>
+                  </span>
+                  <span className="lanz-bento-tag mono">CAN-FD 1,000HZ</span>
+                </div>
+                <div className="lanz-bento-bottom-meta">
+                  <div className="lanz-bento-sub-bar mono">
+                    <span>WAVEFORM LOG</span>
+                  </div>
+                  <h3 className="lanz-bento-card-title">REAL-TIME OSCILLOSCOPE</h3>
+                  <p className="lanz-bento-card-sub mono">ECU INTERROGATION & WAVEFORM LOG</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
