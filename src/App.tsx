@@ -1508,10 +1508,10 @@ export default function App() {
                 setIsMobileMenuOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              aria-label="LANZ AUTOMOBILES - Return to top"
+              aria-label="LANZ AUTOS - Return to top"
             >
               <span className="lanz-fixed-nav__brand-dot" aria-hidden="true" />
-              LANZ AUTOMOBILES
+              LANZ AUTOS
             </a>
           </div>
 
