@@ -1,0 +1,8 @@
+{
+  "name": "Kaltgrat Abfahrt · 84. Auflage",
+  "description": "The 84th running of the Kaltgrat downhill. 2 050 metres, 860 vertical, six named sections and one pitch at 85 per cent.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
