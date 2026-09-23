@@ -54,6 +54,7 @@ interface TestimonialItem {
   quote: string;
   author: string;
   role: string;
+  avatar: string;
   vehicle: string;
   service: string;
   bay: string;
@@ -532,125 +533,6 @@ const GLOBAL_TECHNICIANS: GlobalTechnician[] = [
     lifetimeCalibrations: '2,750+ VEHICLES',
     activeStatus: 'CALIBRATING',
     coord: '60.39° N, 5.32° E'
-  },
-  {
-    id: 'tech-10',
-    name: 'Andrea Comelli',
-    country: 'Italy',
-    countryCode: 'ITA',
-    aseCerts: 7,
-    experienceYears: 19,
-    specialty: 'Engine Performance',
-    firstPassRate: '98.5%',
-    bay: 'BAY 06 · DYNO CELL NORTH',
-    shift: 'SHIFT ONE',
-    certBadge: 'LEVEL 5 DYNO MASTER',
-    keyCerts: ['Lamborghini V10/V12 Master', 'Ducati Desmodromic Lead', 'Superflow AWD Dyno Cert'],
-    lifetimeCalibrations: '4,120+ VEHICLES',
-    activeStatus: 'BENCH ACTIVE',
-    coord: '44.49° N, 11.34° E'
-  },
-  {
-    id: 'tech-11',
-    name: 'Rok Petric',
-    country: 'United States',
-    countryCode: 'USA',
-    aseCerts: 6,
-    experienceYears: 17,
-    specialty: 'Transmission',
-    firstPassRate: '97.8%',
-    bay: 'BAY 11 · GEARBOX & AWD',
-    shift: 'SHIFT ONE',
-    certBadge: 'LEVEL 4 DRIVETRAIN',
-    keyCerts: ['ZF 8HP / 9HP Certified Rebuild', 'Tremec DCT Specialist', 'BorgWarner AWD Transfer'],
-    lifetimeCalibrations: '3,560+ VEHICLES',
-    activeStatus: 'BENCH ACTIVE',
-    coord: '32.77° N, 96.79° W'
-  },
-  {
-    id: 'tech-12',
-    name: 'Felix Wagner',
-    country: 'Germany',
-    countryCode: 'GER',
-    aseCerts: 5,
-    experienceYears: 14,
-    specialty: 'Cooling Systems',
-    firstPassRate: '96.9%',
-    bay: 'BAY 15 · THERMAL LAB',
-    shift: 'SHIFT ONE',
-    certBadge: 'LEVEL 4 THERMAL TECH',
-    keyCerts: ['AMG Twin-Turbo Coolant Loop', 'Mahle Thermal Systems L3', 'Dynamic Pressure Vacuum Tech'],
-    lifetimeCalibrations: '2,890+ VEHICLES',
-    activeStatus: 'BENCH ACTIVE',
-    coord: '48.77° N, 9.18° E'
-  },
-  {
-    id: 'tech-13',
-    name: 'Daniel Clarke',
-    country: 'United Kingdom',
-    countryCode: 'GBR',
-    aseCerts: 6,
-    experienceYears: 18,
-    specialty: 'Chassis',
-    firstPassRate: '98.1%',
-    bay: 'BAY 18 · STRUCTURAL JIG',
-    shift: 'SHIFT ONE · LEAD',
-    certBadge: 'LEVEL 5 CHASSIS MASTER',
-    keyCerts: ['Aston Martin Bonded Aluminum', 'Lotus Monocoque Tub Cert', 'Laser Subframe Squaring'],
-    lifetimeCalibrations: '3,920+ VEHICLES',
-    activeStatus: 'DIAGNOSTIC LEAD',
-    coord: '52.48° N, 1.89° W'
-  },
-  {
-    id: 'tech-14',
-    name: 'Sergio Molina',
-    country: 'Spain',
-    countryCode: 'ESP',
-    aseCerts: 5,
-    experienceYears: 15,
-    specialty: 'Fuel Systems',
-    firstPassRate: '96.7%',
-    bay: 'BAY 20 · INJECTION LAB',
-    shift: 'SHIFT ONE',
-    certBadge: 'LEVEL 4 PRESSURE TECH',
-    keyCerts: ['Direct Injection 350-Bar Test', 'Bosch Piezo Flow Matching', 'E85 Flex-Fuel Calibration'],
-    lifetimeCalibrations: '3,140+ VEHICLES',
-    activeStatus: 'BENCH ACTIVE',
-    coord: '40.41° N, 3.70° W'
-  },
-  {
-    id: 'tech-15',
-    name: 'Ryan Mitchell',
-    country: 'Canada',
-    countryCode: 'CAN',
-    aseCerts: 6,
-    experienceYears: 17,
-    specialty: 'Emissions',
-    firstPassRate: '97.3%',
-    bay: 'BAY 24 · EMISSIONS & EVAP',
-    shift: 'SHIFT ONE',
-    certBadge: 'LEVEL 4 EMISSIONS MASTER',
-    keyCerts: ['EPA / CARB Tier 3 Specialist', 'Catalyst Efficiency Analyzer', 'DEF / SCR Dosing Certified'],
-    lifetimeCalibrations: '3,480+ VEHICLES',
-    activeStatus: 'BENCH ACTIVE',
-    coord: '43.65° N, 79.38° W'
-  },
-  {
-    id: 'tech-16',
-    name: 'Oskar Lindgren',
-    country: 'Sweden',
-    countryCode: 'SWE',
-    aseCerts: 5,
-    experienceYears: 14,
-    specialty: 'HVAC Systems',
-    firstPassRate: '96.6%',
-    bay: 'BAY 26 · CLIMATE & ADAS',
-    shift: 'SHIFT ONE',
-    certBadge: 'LEVEL 4 CLIMATE TECH',
-    keyCerts: ['R1234yf Heat Pump Certified', 'Volvo Twin-Engine Climate Loop', 'Acoustic Leak Detection'],
-    lifetimeCalibrations: '2,930+ VEHICLES',
-    activeStatus: 'BENCH ACTIVE',
-    coord: '59.32° N, 18.06° E'
   }
 ];
 
@@ -856,6 +738,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     quote: 'Found an intermittent optical CAN-FD bus drop that two other premier dealerships failed to diagnose over six months. Diagnosed and resolved within 48 hours.',
     author: 'Marcus Vance',
     role: 'Chief Fleet Director',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80',
     vehicle: '2023 Porsche 911 GT3 RS (992)',
     service: 'Optical CAN-FD Fault Isolation & ECU Gateway Re-flash',
     bay: 'BAY 04 · NORTH WING',
@@ -868,6 +751,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     quote: 'Their 3D laser alignment and hydraulic brake overhaul transformed the track response of my RS6. The itemized telemetry report was cleaner than factory documentation.',
     author: 'Elena Rostova',
     role: 'Track Day Competitor',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200&q=80',
     vehicle: '2022 Audi RS6 Avant Dynamic Plus',
     service: 'Master Carbon-Ceramic Brake Overhaul & 3D Alignment',
     bay: 'BAY 08 · CHASSIS & DYNAMICS',
@@ -880,6 +764,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     quote: 'Commercial fleet maintenance with zero guesswork. Every truck is scanned, torqued to OEM spec, and returned on exact schedule with digital inspection logs.',
     author: 'Devon Chen',
     role: 'Logistics Operations Lead',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200&q=80',
     vehicle: 'Fleet Series · Ford Super Duty F-450 PowerStroke',
     service: 'High-Pressure Common Rail & Turbo System Overhaul',
     bay: 'BAY 16 · COMMERCIAL TRUCK WING',
@@ -892,6 +777,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     quote: 'High-voltage battery insulation fault resolved with surgical precision. True master technicians who understand modern EV architecture down to cell-level balancing.',
     author: 'Henrik Lindqvist',
     role: 'Automotive Systems Engineer',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200&q=80',
     vehicle: '2024 BMW i4 M50 Dual-Motor EV',
     service: 'High-Voltage Pyrotechnic Switch & Inverter Calibration',
     bay: 'BAY 02 · HIGH-VOLTAGE PROPULSION',
@@ -2821,8 +2707,15 @@ export default function App() {
 
             <div className="lanz-testi-meta-grid">
               <div className="lanz-testi-author-block">
-                <div className="lanz-testi-author-name">{TESTIMONIALS[activeTestimonialIdx].author}</div>
-                <div className="lanz-testi-author-role mono">{TESTIMONIALS[activeTestimonialIdx].role}</div>
+                <img
+                  src={TESTIMONIALS[activeTestimonialIdx].avatar}
+                  alt={TESTIMONIALS[activeTestimonialIdx].author}
+                  className="lanz-testi-author-avatar"
+                />
+                <div className="lanz-testi-author-info">
+                  <div className="lanz-testi-author-name">{TESTIMONIALS[activeTestimonialIdx].author}</div>
+                  <div className="lanz-testi-author-role mono">{TESTIMONIALS[activeTestimonialIdx].role}</div>
+                </div>
               </div>
 
               <div className="lanz-testi-vehicle-block">
@@ -2851,6 +2744,11 @@ export default function App() {
                     className={`lanz-testi-tab mono ${activeTestimonialIdx === idx ? 'is-active' : ''}`}
                     onClick={() => setActiveTestimonialIdx(idx)}
                   >
+                    <img
+                      src={item.avatar}
+                      alt={item.author}
+                      className="lanz-testi-tab-avatar"
+                    />
                     <span className="lanz-testi-tab-idx">0{idx + 1}</span>
                     <span className="lanz-testi-tab-name">{item.author}</span>
                   </button>
