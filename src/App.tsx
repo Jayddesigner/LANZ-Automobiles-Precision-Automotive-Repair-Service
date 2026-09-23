@@ -1566,12 +1566,22 @@ export default function App() {
           />
         </div>
         <div className="cover__type">
-          <h1 id="wordmark" aria-label="LANZ">
-            {'LANZ'.split('').map((char, i) => (
-              <span key={i} style={{ '--i': i } as React.CSSProperties} aria-hidden="true">
-                {char}
-              </span>
-            ))}
+          <h1 id="wordmark" aria-label="LANZ AUTOMOBILES">
+            <span className="wordmark__word wordmark__word--main">
+              {'LANZ'.split('').map((char, i) => (
+                <span key={`lanz-${i}`} style={{ '--i': i } as React.CSSProperties} aria-hidden="true">
+                  {char}
+                </span>
+              ))}
+            </span>
+            <span className="wordmark__space" aria-hidden="true">&nbsp;</span>
+            <span className="wordmark__word wordmark__word--sub">
+              {'AUTOMOBILES'.split('').map((char, i) => (
+                <span key={`auto-${i}`} style={{ '--i': i + 4 } as React.CSSProperties} aria-hidden="true">
+                  {char}
+                </span>
+              ))}
+            </span>
           </h1>
         </div>
         <div className="cover__racer" style={{ display: 'none' }}>

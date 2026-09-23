@@ -120,7 +120,9 @@ button {
 .wrap {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--s-lg);
+  padding: 0 clamp(16px, 4vw, 48px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .rule {
@@ -259,28 +261,64 @@ section {
   z-index: 1;
   left: 0;
   right: 0;
-  top: 42%;
+  top: 40%;
+  transform: translateY(-50%);
   text-align: center;
   pointer-events: none;
+  padding: 0 clamp(12px, 3vw, 40px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cover__type h1 {
-  font-size: clamp(3.6rem, 15.4vw, 15rem);
-  line-height: 0.82;
-  letter-spacing: -0.045em;
-  font-stretch: 112%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 36px);
   color: var(--snow-100);
   mix-blend-mode: screen;
   opacity: 0.93;
-  overflow: hidden;
-  padding-bottom: 0.06em;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
 }
 
-.cover__type h1 span {
+.wordmark__word {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+
+.wordmark__word--main {
+  font-size: clamp(3.8rem, 11.5vw, 13rem);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  font-stretch: 115%;
+  font-weight: 900;
+}
+
+.wordmark__word--sub {
+  font-size: clamp(2.2rem, 6.8vw, 8rem);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  font-stretch: 108%;
+  font-weight: 800;
+  color: var(--snow-100);
+  opacity: 0.94;
+}
+
+.wordmark__space {
+  display: none;
+}
+
+.cover__type h1 span span {
   display: inline-block;
   transform: translateY(112%);
   animation: letterUp 0.78s var(--ease) both;
-  animation-delay: calc(0.55s + var(--i) * 55ms);
+  animation-delay: calc(0.55s + var(--i) * 45ms);
 }
 
 @keyframes letterUp {
@@ -4154,6 +4192,8 @@ section {
   border-top: 1px solid rgba(238, 243, 248, 0.08);
   border-bottom: 1px solid rgba(238, 243, 248, 0.08);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-head {
@@ -4174,7 +4214,8 @@ section {
   background: rgba(17, 21, 27, 0.85);
   border: 1px solid rgba(238, 243, 248, 0.12);
   padding: 8px 14px;
-  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-status-dot {
@@ -4184,6 +4225,7 @@ section {
   background: #C7F500;
   box-shadow: 0 0 8px #C7F500;
   animation: perf-pulse 1.8s infinite ease-in-out;
+  flex-shrink: 0;
 }
 
 .lanz-est-grid {
@@ -4191,6 +4233,9 @@ section {
   grid-template-columns: 1.25fr 0.95fr;
   gap: var(--s-md);
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Two Cards Composition */
@@ -4200,6 +4245,10 @@ section {
   border: 1px solid rgba(238, 243, 248, 0.1);
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Corner Reticle Accents */
@@ -4243,7 +4292,8 @@ section {
 .lanz-est-visual-wrap {
   position: relative;
   width: 100%;
-  height: 270px;
+  min-height: 270px;
+  height: clamp(270px, 35vw, 320px);
   background: #040608;
   overflow: hidden;
   border-bottom: 1px solid rgba(238, 243, 248, 0.1);
@@ -4286,22 +4336,27 @@ section {
 .lanz-est-visual-topbar {
   position: absolute;
   top: 12px;
-  left: 14px;
-  right: 14px;
+  left: 12px;
+  right: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
   z-index: 2;
 }
 
 .lanz-est-badge {
-  font-size: 0.64rem;
+  font-size: clamp(0.56rem, 1.8vw, 0.64rem);
   letter-spacing: 0.14em;
-  padding: 4px 10px;
+  padding: 4px 8px;
   background: rgba(11, 14, 18, 0.85);
   border: 1px solid rgba(238, 243, 248, 0.15);
   color: #C7F500;
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-badge--dim {
@@ -4311,9 +4366,9 @@ section {
 
 .lanz-est-platform-selector {
   position: absolute;
-  bottom: 12px;
-  left: 14px;
-  right: 14px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
@@ -4323,7 +4378,7 @@ section {
 .lanz-est-platform-btn {
   background: rgba(17, 21, 27, 0.88);
   border: 1px solid rgba(238, 243, 248, 0.15);
-  padding: 7px 8px;
+  padding: 6px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4331,6 +4386,9 @@ section {
   cursor: pointer;
   transition: all 0.2s ease;
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .lanz-est-platform-btn:hover {
@@ -4359,11 +4417,14 @@ section {
 }
 
 .lanz-est-platform-name {
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
   font-weight: 700;
   color: var(--snow-100);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .lanz-est-platform-btn.is-active .lanz-est-platform-name {
@@ -4371,18 +4432,21 @@ section {
 }
 
 .lanz-est-platform-mult {
-  font-size: 0.58rem;
+  font-size: 0.56rem;
   color: var(--snow-400);
 }
 
 /* Lower Portion: Selectable Repair/Service Options */
 .lanz-est-services-container {
-  padding: var(--s-md);
+  padding: clamp(14px, 3vw, 24px);
   display: flex;
   flex-direction: column;
   gap: var(--s-sm);
   background: #0D1015;
   flex: 1;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-services-header {
@@ -4391,6 +4455,8 @@ section {
   align-items: center;
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(238, 243, 248, 0.08);
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .lanz-est-services-title {
@@ -4399,6 +4465,7 @@ section {
   color: var(--snow-300);
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -4440,6 +4507,8 @@ section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-service-item {
@@ -4453,6 +4522,9 @@ section {
   gap: 6px;
   transition: all 0.2s ease;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-service-item:hover {
@@ -4470,6 +4542,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .lanz-est-srv-code {
@@ -4496,6 +4570,7 @@ section {
   color: var(--snow-400);
   border: 1px solid rgba(238, 243, 248, 0.2);
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .lanz-est-srv-check.is-checked {
@@ -4511,6 +4586,8 @@ section {
   font-weight: 700;
   color: var(--snow-100);
   letter-spacing: -0.01em;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .lanz-est-service-item.is-selected .lanz-est-srv-name {
@@ -4521,6 +4598,8 @@ section {
   font-size: 0.72rem;
   color: var(--snow-400);
   line-height: 1.35;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .lanz-est-srv-foot {
@@ -4530,6 +4609,8 @@ section {
   padding-top: 6px;
   border-top: 1px dashed rgba(238, 243, 248, 0.08);
   font-size: 0.66rem;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .lanz-est-srv-time {
@@ -4549,13 +4630,20 @@ section {
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(238, 243, 248, 0.12);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .lanz-est-glass-inner {
-  padding: var(--s-md) var(--s-md) var(--s-lg);
+  padding: clamp(16px, 3.5vw, 32px);
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-right-header {
@@ -4564,12 +4652,15 @@ section {
   align-items: center;
   padding-bottom: var(--s-xs);
   border-bottom: 1px solid rgba(238, 243, 248, 0.08);
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .lanz-est-tag {
   font-size: 0.66rem;
   letter-spacing: 0.16em;
   color: var(--snow-400);
+  word-break: break-word;
 }
 
 .lanz-est-dot-live {
@@ -4578,6 +4669,7 @@ section {
   border-radius: 50%;
   background: #C7F500;
   box-shadow: 0 0 8px #C7F500;
+  flex-shrink: 0;
 }
 
 .lanz-est-price-container {
@@ -4585,21 +4677,24 @@ section {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 100%;
 }
 
 .lanz-est-price-val {
-  font-size: clamp(2.8rem, 4.5vw, 3.8rem);
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #C7F500;
   text-shadow: 0 0 24px rgba(199, 245, 0, 0.25);
-  line-height: 1;
+  line-height: 1.05;
+  word-break: break-word;
 }
 
 .lanz-est-price-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 8px;
   font-size: 0.64rem;
   letter-spacing: 0.12em;
   color: var(--snow-400);
@@ -4613,13 +4708,15 @@ section {
 .lanz-est-breakdown-box {
   border: 1px solid rgba(238, 243, 248, 0.1);
   background: rgba(8, 10, 14, 0.6);
-  padding: 14px;
+  padding: 12px 14px;
   margin: var(--s-xs) 0 var(--s-sm);
   display: flex;
   flex-direction: column;
   gap: 8px;
   max-height: 200px;
   overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .lanz-est-breakdown-title {
@@ -4651,25 +4748,30 @@ section {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 100%;
 }
 
 .lanz-est-breakdown-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 4px 0;
   border-bottom: 1px dashed rgba(238, 243, 248, 0.06);
+  gap: 8px;
 }
 
 .lanz-est-breakdown-left {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
 .lanz-est-breakdown-code {
   font-size: 0.62rem;
   color: #C7F500;
+  flex-shrink: 0;
 }
 
 .lanz-est-breakdown-name {
@@ -4677,12 +4779,16 @@ section {
   color: var(--snow-200);
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .lanz-est-breakdown-cost {
   font-size: 0.76rem;
   color: var(--snow-100);
   font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* Technical Specs Table */
@@ -4696,11 +4802,15 @@ section {
   margin-bottom: var(--s-xs);
   font-size: 0.66rem;
   letter-spacing: 0.1em;
+  width: 100%;
 }
 
 .lanz-est-spec-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
   color: var(--snow-400);
 }
 
@@ -4714,10 +4824,12 @@ section {
   color: var(--snow-500);
   line-height: 1.4;
   margin: 0 0 var(--s-md);
+  word-break: break-word;
 }
 
 .lanz-est-action-wrap {
   margin-top: auto;
+  width: 100%;
 }
 
 .lanz-est-main-cta {
@@ -4725,6 +4837,7 @@ section {
   justify-content: center;
   padding: 14px 20px;
   font-size: 0.78rem;
+  box-sizing: border-box;
 }
 
 /* =========================================================================
@@ -5089,31 +5202,44 @@ section {
   margin-top: var(--s-xl);
   background: #11151D;
   border: 1px solid rgba(238, 243, 248, 0.12);
-  padding: var(--s-lg) var(--s-xl);
+  padding: clamp(18px, 3.5vw, 36px) clamp(16px, 4vw, 40px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: var(--s-md);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.lanz-faq-banner-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .lanz-faq-banner-title {
   font-family: "Space Grotesk", sans-serif;
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.02em;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .lanz-faq-banner-sub {
   margin: 4px 0 0;
-  font-size: 0.8rem;
+  font-size: clamp(0.74rem, 1.8vw, 0.8rem);
   color: var(--snow-400);
+  line-height: 1.5;
+  word-break: break-word;
 }
 
 .lanz-faq-banner-actions {
   display: flex;
-  gap: var(--s-xs);
-  white-space: nowrap;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* =========================================================================
@@ -5238,20 +5364,78 @@ section {
   }
   .lanz-faq-banner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 18px;
+  }
+  .lanz-faq-banner-actions {
+    width: 100%;
   }
 }
 
 @media (max-width: 768px) {
+  .cover__type {
+    top: 38%;
+    padding: 0 16px;
+  }
+  .cover__type h1 {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .wordmark__word--main {
+    font-size: clamp(4.4rem, 20vw, 6.8rem);
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+  }
+  .wordmark__word--sub {
+    font-size: clamp(1.8rem, 8.5vw, 2.9rem);
+    line-height: 0.95;
+    letter-spacing: 0.14em;
+    margin-top: 4px;
+    color: #fff;
+    opacity: 0.96;
+  }
+  .hero-kicker {
+    font-size: clamp(0.58rem, 2vw, 0.68rem);
+    letter-spacing: 0.18em;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+  }
   .lanz-est-head {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+  .lanz-est-head-meta {
+    white-space: normal;
+    width: 100%;
+  }
+  .lanz-est-visual-wrap {
+    height: clamp(290px, 58vw, 340px);
   }
   .lanz-est-platform-selector {
     grid-template-columns: repeat(2, 1fr);
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    gap: 6px;
   }
   .lanz-est-services-grid {
     grid-template-columns: 1fr;
+  }
+  .lanz-faq-banner-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .lanz-faq-banner-actions .hero-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 0.74rem;
+    text-align: center;
   }
   .lanz-testi-head {
     flex-direction: column;
@@ -5287,6 +5471,41 @@ section {
   }
   .lanz-modal-form-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .cover__type {
+    top: 36%;
+    padding: 0 12px;
+  }
+  .wordmark__word--main {
+    font-size: clamp(4.6rem, 22vw, 6.2rem);
+    line-height: 0.78;
+  }
+  .wordmark__word--sub {
+    font-size: clamp(1.7rem, 8.8vw, 2.5rem);
+    letter-spacing: 0.13em;
+    margin-top: 6px;
+  }
+  .lanz-est-visual-wrap {
+    height: clamp(310px, 72vw, 360px);
+  }
+  .lanz-est-badge--dim {
+    display: none;
+  }
+  .lanz-est-platform-btn {
+    padding: 5px 4px;
+  }
+  .lanz-est-platform-name {
+    font-size: 0.58rem;
+  }
+  .lanz-faq-banner {
+    padding: 16px;
+  }
+  .lanz-faq-banner-actions .hero-btn {
+    font-size: 0.7rem;
+    padding: 11px 12px;
   }
 }
 
@@ -5371,6 +5590,9 @@ section {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .lanz-footer-tel-label {
@@ -5385,6 +5607,8 @@ section {
   color: var(--snow-100);
   text-decoration: none;
   transition: color 0.15s ease;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .lanz-footer-tel-val:hover {
