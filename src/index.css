@@ -407,12 +407,14 @@ section {
 }
 
 .lanz-fixed-nav__inner {
-  max-width: 1540px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px clamp(16px, 3.5vw, 48px);
+  padding: 13px 40px;
+  box-sizing: border-box;
   gap: var(--s-sm);
 }
 
@@ -773,12 +775,23 @@ section {
 
 /* Nav Responsive Queries */
 @media (max-width: 1024px) {
+  .lanz-fixed-nav__inner {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
   .lanz-fixed-nav__desktop-links,
   .lanz-fixed-nav__desktop-actions {
     display: none;
   }
   .lanz-burger-btn {
     display: inline-flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .lanz-fixed-nav__inner {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 

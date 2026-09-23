@@ -1539,17 +1539,6 @@ export default function App() {
             </a>
             <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
             <a
-              href="#spec"
-              className="lanz-fixed-nav__link"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('spec');
-              }}
-            >
-              STANDARD
-            </a>
-            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
-            <a
               href="#technicians"
               className="lanz-fixed-nav__link"
               onClick={(e) => {
@@ -1569,28 +1558,6 @@ export default function App() {
               }}
             >
               ESTIMATOR
-            </a>
-            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
-            <a
-              href="#testimonials"
-              className="lanz-fixed-nav__link"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('testimonials');
-              }}
-            >
-              TESTIMONIALS
-            </a>
-            <span className="lanz-fixed-nav__sep" aria-hidden="true">/</span>
-            <a
-              href="#faq"
-              className="lanz-fixed-nav__link"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('faq');
-              }}
-            >
-              FAQ
             </a>
           </nav>
 
@@ -1658,11 +1625,8 @@ export default function App() {
             {[
               { href: '#face', id: 'face', num: '01', title: 'SERVICES & VEHICLES', desc: 'Powertrain, suspension, diagnostics' },
               { href: '#trace', id: 'trace', num: '02', title: 'PERFORMANCE DATA', desc: 'Chassis dyno & laser geometry' },
-              { href: '#spec', id: 'spec', num: '03', title: 'ENGINEERING STANDARD', desc: 'ISO 9001 & OEM protocols' },
-              { href: '#technicians', id: 'technicians', num: '04', title: 'MASTER TECHNICIANS', desc: 'ASE certified master specialists' },
-              { href: '#estimator', id: 'estimator', num: '05', title: 'COST ESTIMATOR', desc: 'Interactive repair price calculator' },
-              { href: '#testimonials', id: 'testimonials', num: '06', title: 'CLIENT TESTIMONIALS', desc: 'Verified customer reviews & telemetry' },
-              { href: '#faq', id: 'faq', num: '07', title: 'TECHNICAL FAQ', desc: 'Warranties, turnarounds, towing' },
+              { href: '#technicians', id: 'technicians', num: '03', title: 'MASTER TECHNICIANS', desc: 'ASE certified master specialists' },
+              { href: '#estimator', id: 'estimator', num: '04', title: 'COST ESTIMATOR', desc: 'Interactive repair price calculator' },
             ].map((item) => (
               <a
                 key={item.id}
