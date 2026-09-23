@@ -1,6 +1,6 @@
 {
-  "name": "Kaltgrat Abfahrt · 84. Auflage",
-  "description": "The 84th running of the Kaltgrat downhill. 2 050 metres, 860 vertical, six named sections and one pitch at 85 per cent.",
+  "name": "LANZ AUTOMOBILES · Precision Service & Repair",
+  "description": "Master automotive repair, advanced diagnostics, maintenance, and factory inspections for cars, motorcycles, trucks, and specialty vehicles.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

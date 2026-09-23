@@ -5,7 +5,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
-import heroBg from '@/public/hero_final_bg.jpg';
 import estimatorCarImg from './assets/images/lanz_estimator_car_1790166411842.jpg';
 
 interface SectionData {
@@ -1095,6 +1094,143 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
+  // 11: Scroll-Controlled Hero Video & Text Fade State
+  const heroTrackRef = useRef<HTMLDivElement | null>(null);
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [heroTextOpacity, setHeroTextOpacity] = useState<number>(1);
+
+  // Scroll-controlled video scrub & progressive text fade with in-memory preloading
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    const track = heroTrackRef.current;
+    if (!video || !track) return;
+
+    const VIDEO_URL =
+      'https://res.cloudinary.com/b2s3bcgi/video/upload/q_auto,f_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4';
+
+    // 1. Preload & buffer full 10-second video into memory blob to eliminate seek lag & range requests
+    let blobUrl: string | null = null;
+    let isCancelled = false;
+
+    fetch(VIDEO_URL)
+      .then((res) => res.blob())
+      .then((blob) => {
+        if (isCancelled || !video) return;
+        blobUrl = URL.createObjectURL(blob);
+        const prevTime = video.currentTime;
+        video.src = blobUrl;
+        video.currentTime = prevTime;
+        video.pause();
+      })
+      .catch(() => {
+        // Direct stream fallback
+      });
+
+    video.pause();
+    video.currentTime = 0;
+
+    let targetTime = 0;
+    let isSeeking = false;
+    let rafId: number;
+
+    const performSeek = () => {
+      if (!video) return;
+      if (isSeeking) return;
+
+      const diff = Math.abs(video.currentTime - targetTime);
+      if (diff > 0.012) {
+        isSeeking = true;
+        try {
+          if ('fastSeek' in video && typeof (video as any).fastSeek === 'function') {
+            (video as any).fastSeek(targetTime);
+          } else {
+            video.currentTime = targetTime;
+          }
+        } catch (_) {
+          isSeeking = false;
+        }
+      }
+    };
+
+    const handleSeeked = () => {
+      isSeeking = false;
+      const diff = Math.abs((video?.currentTime || 0) - targetTime);
+      if (diff > 0.012) {
+        performSeek();
+      }
+    };
+
+    video.addEventListener('seeked', handleSeeked);
+
+    const updateHeroScroll = () => {
+      if (!track || !video) return;
+      const rect = track.getBoundingClientRect();
+      const scrollableDist = rect.height - window.innerHeight;
+
+      if (scrollableDist <= 0) return;
+
+      // Calculate exact scroll progress: 0 to 1
+      const currentScroll = -rect.top;
+      const progress = Math.max(0, Math.min(1, currentScroll / scrollableDist));
+
+      // Video timeline scrub 0% -> 100%
+      const duration =
+        video.duration && !isNaN(video.duration) && video.duration > 0
+          ? video.duration
+          : 10;
+      
+      // Ensure exact final frame is reached at progress = 1
+      targetTime = progress >= 1 ? Math.max(0, duration - 0.001) : progress * duration;
+
+      performSeek();
+
+      // Scroll-based progressive text fade:
+      // 0% -> 15%: Full 100% visibility (user has started scrolling)
+      // 15% -> 60%: Smooth cinematic gradual fade down to 0
+      // 60% -> 100%: 0% opacity (vehicle transformation is full visual focus)
+      let opacity = 1;
+      if (progress <= 0.15) {
+        opacity = 1;
+      } else if (progress >= 0.6) {
+        opacity = 0;
+      } else {
+        const pNorm = (progress - 0.15) / (0.6 - 0.15);
+        opacity = 0.5 * (1 + Math.cos(Math.PI * pNorm));
+      }
+
+      setHeroTextOpacity(Number(opacity.toFixed(3)));
+    };
+
+    const handleScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateHeroScroll);
+    };
+
+    const handleLoadedMetadata = () => {
+      video.pause();
+      updateHeroScroll();
+    };
+
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    // Initial update
+    updateHeroScroll();
+
+    return () => {
+      isCancelled = true;
+      cancelAnimationFrame(rafId);
+      video.removeEventListener('seeked', handleSeeked);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+    };
+  }, []);
+
   // Scroll listener for fixed navigation bar styling
   useEffect(() => {
     const handleScroll = () => {
@@ -1555,68 +1691,98 @@ export default function App() {
         </div>
       </div>
 
-      {/* ==================================================== 01 · COVER */}
-      <header className="cover">
-        <span className="beam" aria-hidden="true"></span>
-        <div className="cover__plate">
-          <img
-            src={heroBg}
-            alt="LANZ AUTOMOBILES engineering exploded view of performance sports car with motorcycle and truck."
-            referrerPolicy="no-referrer"
-          />
-        </div>
-        <div className="cover__type">
-          <h1 id="wordmark" aria-label="LANZ AUTOMOBILES">
-            <span className="wordmark__word wordmark__word--main">
-              {'LANZ'.split('').map((char, i) => (
-                <span key={`lanz-${i}`} style={{ '--i': i } as React.CSSProperties} aria-hidden="true">
-                  {char}
-                </span>
-              ))}
-            </span>
-            <span className="wordmark__space" aria-hidden="true">&nbsp;</span>
-            <span className="wordmark__word wordmark__word--sub">
-              {'AUTOMOBILES'.split('').map((char, i) => (
-                <span key={`auto-${i}`} style={{ '--i': i + 4 } as React.CSSProperties} aria-hidden="true">
-                  {char}
-                </span>
-              ))}
-            </span>
-          </h1>
-        </div>
-        <div className="cover__racer" style={{ display: 'none' }}>
-          <img
-            src={`${ASSET_BASE}racer.png`}
-            alt="Master automotive engineering and precision vehicle diagnostics."
-          />
-        </div>
-        <div className="cover__grid">
-          {/* Cover Top Clearance Spacer for Fixed Nav */}
-          <div className="cover__top-spacer ci" style={{ '--i': 0 } as React.CSSProperties} aria-hidden="true" />
+      {/* ==================================================== 01 · COVER (SCROLL CONTROLLED) */}
+      <div ref={heroTrackRef} className="cover-track">
+        <header className="cover">
+          <span className="beam" aria-hidden="true"></span>
+          <div className="cover__plate">
+            <video
+              ref={heroVideoRef}
+              className="cover__video"
+              muted
+              playsInline
+              preload="auto"
+              loop={false}
+              controls={false}
+              disablePictureInPicture
+            >
+              <source
+                src="https://res.cloudinary.com/b2s3bcgi/video/upload/q_auto,f_auto/v1790175588/Cinematic_Transformation_Video-ezremove.mp4"
+                type="video/mp4"
+              />
+              <source
+                src="https://res.cloudinary.com/b2s3bcgi/video/upload/v1790175588/Cinematic_Transformation_Video-ezremove.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+          <div
+            className="cover__type"
+            style={{
+              opacity: heroTextOpacity,
+              transition: 'opacity 0.15s ease-out',
+              pointerEvents: heroTextOpacity < 0.1 ? 'none' : 'auto',
+            }}
+          >
+            <h1 id="wordmark" aria-label="LANZ AUTOMOBILES">
+              <span className="wordmark__word wordmark__word--main">
+                {'LANZ'.split('').map((char, i) => (
+                  <span key={`lanz-${i}`} style={{ '--i': i } as React.CSSProperties} aria-hidden="true">
+                    {char}
+                  </span>
+                ))}
+              </span>
+              <span className="wordmark__space" aria-hidden="true">&nbsp;</span>
+              <span className="wordmark__word wordmark__word--sub">
+                {'AUTOMOBILES'.split('').map((char, i) => (
+                  <span key={`auto-${i}`} style={{ '--i': i + 4 } as React.CSSProperties} aria-hidden="true">
+                    {char}
+                  </span>
+                ))}
+              </span>
+            </h1>
+          </div>
+          <div className="cover__racer" style={{ display: 'none' }}>
+            <img
+              src={`${ASSET_BASE}racer.png`}
+              alt="Master automotive engineering and precision vehicle diagnostics."
+            />
+          </div>
+          <div className="cover__grid">
+            {/* Cover Top Clearance Spacer for Fixed Nav */}
+            <div className="cover__top-spacer ci" style={{ '--i': 0 } as React.CSSProperties} aria-hidden="true" />
 
-          {/* Center / Mid-Hero Supporting Technical Metadata Layer */}
-          <div className="hero-center">
-            <div className="hero-kicker ci" style={{ '--i': 1 } as React.CSSProperties}>
-              <span>AUTO SERVICE</span>
-              <span className="hero-kicker__dot" aria-hidden="true">·</span>
-              <span>MULTI-VEHICLE</span>
-              <span className="hero-kicker__dot" aria-hidden="true">·</span>
-              <span>PRECISION DIAGNOSTICS</span>
-            </div>
-
-            <div className="hero-flanks">
-              <div className="hero-flank hero-flank--left ci" style={{ '--i': 2 } as React.CSSProperties}>
-                <div className="hero-flank__code">SPEC 84-01 // USA-OEM</div>
-                <div className="hero-flank__desc">ASE MASTER CERTIFIED &middot; EST 1984</div>
+            {/* Center / Mid-Hero Supporting Technical Metadata Layer */}
+            <div
+              className="hero-center"
+              style={{
+                opacity: heroTextOpacity,
+                transition: 'opacity 0.15s ease-out',
+                pointerEvents: heroTextOpacity < 0.1 ? 'none' : 'auto',
+              }}
+            >
+              <div className="hero-kicker ci" style={{ '--i': 1 } as React.CSSProperties}>
+                <span>AUTO SERVICE</span>
+                <span className="hero-kicker__dot" aria-hidden="true">·</span>
+                <span>MULTI-VEHICLE</span>
+                <span className="hero-kicker__dot" aria-hidden="true">·</span>
+                <span>PRECISION DIAGNOSTICS</span>
               </div>
-              <div className="hero-flank hero-flank--right ci" style={{ '--i': 3 } as React.CSSProperties}>
-                <div className="hero-flank__code">TELEMETRY // CAN-FD &middot; DoIP</div>
-                <div className="hero-flank__desc">ACTIVE INTAKE STATUS: ONLINE</div>
+
+              <div className="hero-flanks">
+                <div className="hero-flank hero-flank--left ci" style={{ '--i': 2 } as React.CSSProperties}>
+                  <div className="hero-flank__code">SPEC 84-01 // USA-OEM</div>
+                  <div className="hero-flank__desc">ASE MASTER CERTIFIED &middot; EST 1984</div>
+                </div>
+                <div className="hero-flank hero-flank--right ci" style={{ '--i': 3 } as React.CSSProperties}>
+                  <div className="hero-flank__code">TELEMETRY // CAN-FD &middot; DoIP</div>
+                  <div className="hero-flank__desc">ACTIVE INTAKE STATUS: ONLINE</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
 
       {/* ==================================== 02 · VEHICLES WE SERVICE */}
       <section

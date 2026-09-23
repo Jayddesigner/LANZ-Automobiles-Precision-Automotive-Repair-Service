@@ -187,13 +187,25 @@ section {
   }
 }
 
-/* ========================================================= 01 · COVER */
-.cover {
+/* ========================================================= 01 · COVER (SCROLL-CONTROLLED STICKY HERO) */
+.cover-track {
   position: relative;
+  width: 100%;
+  height: 420vh;
+  margin: 0;
+  padding: 0;
+}
+
+.cover {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   min-height: 100svh;
+  width: 100%;
   overflow: hidden;
   isolation: isolate;
   padding: 0;
+  z-index: 2;
 }
 
 /* 0.00s · a timing beam crosses the frame */
@@ -217,12 +229,23 @@ section {
   100% { transform: scaleX(0); transform-origin: right; opacity: 0; }
 }
 
-/* 0.15s · the plate settles, then breathes for as long as you stay */
+/* 0.15s · the plate settles, high-fidelity video canvas */
 .cover__plate {
   position: absolute;
   inset: 0;
   z-index: 0;
-  animation: drift 30s ease-in-out 2s infinite alternate;
+  overflow: hidden;
+  background: #06080B;
+}
+
+.cover__plate video,
+.cover__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: contrast(1.03) brightness(0.98);
 }
 
 .cover__plate img {
@@ -233,17 +256,6 @@ section {
   filter: contrast(1.04) brightness(0.98);
   will-change: transform;
   transform: translateZ(0);
-  animation: plateIn 1.9s var(--ease) 0.15s both;
-}
-
-@keyframes plateIn {
-  from { opacity: 0; transform: scale(1.14); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes drift {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
 }
 
 .cover__plate::after {
@@ -251,8 +263,10 @@ section {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(11,14,18,0.55) 0%, rgba(11,14,18,0.04) 35%, rgba(11,14,18,0.85) 100%),
+    linear-gradient(180deg, rgba(11,14,18,0.52) 0%, rgba(11,14,18,0.06) 35%, rgba(11,14,18,0.85) 100%),
     linear-gradient(90deg, rgba(11,14,18,0.2) 0%, rgba(11,14,18,0) 25%, rgba(11,14,18,0) 75%, rgba(11,14,18,0.2) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* 0.55s · the wordmark masks up, letter by letter */
@@ -5353,6 +5367,15 @@ section {
    RESPONSIVE QUERIES FOR NEW SECTIONS
    ========================================================================= */
 @media (max-width: 1024px) {
+  .cover__grid {
+    padding-top: clamp(88px, 12vh, 120px);
+  }
+  .hero-center {
+    padding-top: clamp(16px, 2.5vh, 28px);
+  }
+  .hero-kicker {
+    margin-top: 6px;
+  }
   .lanz-est-grid {
     grid-template-columns: 1fr;
   }
@@ -5373,8 +5396,14 @@ section {
 }
 
 @media (max-width: 768px) {
+  .cover__grid {
+    padding-top: clamp(96px, 14vh, 130px);
+  }
+  .hero-center {
+    padding-top: clamp(18px, 3vh, 32px);
+  }
   .cover__type {
-    top: 38%;
+    top: 40%;
     padding: 0 16px;
   }
   .cover__type h1 {
@@ -5396,12 +5425,14 @@ section {
     opacity: 0.96;
   }
   .hero-kicker {
+    margin-top: 8px;
     font-size: clamp(0.58rem, 2vw, 0.68rem);
     letter-spacing: 0.18em;
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
     gap: 6px;
+    padding: 0 8px;
   }
   .lanz-est-head {
     flex-direction: column;
@@ -5475,8 +5506,14 @@ section {
 }
 
 @media (max-width: 480px) {
+  .cover__grid {
+    padding-top: clamp(100px, 15vh, 136px);
+  }
+  .hero-center {
+    padding-top: clamp(20px, 3.5vh, 36px);
+  }
   .cover__type {
-    top: 36%;
+    top: 38%;
     padding: 0 12px;
   }
   .wordmark__word--main {
